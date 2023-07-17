@@ -1,8 +1,6 @@
 import std/[
-  db_sqlite,
   sequtils,
   strformat,
-  strtabs,
   strutils,
 ]
 
