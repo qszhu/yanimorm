@@ -1,6 +1,8 @@
 import std/[
-  db_sqlite,
   logging,
+]
+import db_connector/[
+  db_sqlite,
 ]
 
 import ./orm
