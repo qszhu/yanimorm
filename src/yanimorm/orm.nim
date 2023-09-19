@@ -161,6 +161,21 @@ proc `===`*(name, val: string): EqualsExpr =
   result.name = name
   result.val = val
 
+proc `===`*(name: string, val: int): EqualsExpr =
+  result.new
+  result.name = name
+  result.val = $val
+
+proc `===`*(name: string, val: bool): EqualsExpr =
+  result.new
+  result.name = name
+  result.val = if val: "1" else: "0"
+
+proc `<<`*(name, val: string): LessThanExpr =
+  result.new
+  result.name = name
+  result.val = val
+
 proc `and`*(a, b: WhereExpr): AndExpr =
   result.new
   result.lhs = a
