@@ -19,7 +19,7 @@ type
     pageSize*: int = 10
 
 proc toBool*(v: string): bool {.inline.} =
-  v.toLowerAscii == "true"
+  v.toLowerAscii != "0"
 
 proc fromBool*(v: bool): string {.inline.} =
-  if v: "true" else: "false"
+  if v: "1" else: "0"
