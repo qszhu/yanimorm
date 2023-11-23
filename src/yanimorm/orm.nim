@@ -153,8 +153,8 @@ method query*(self: TrueExpr): DbQuery =
 method query*(self: FalseExpr): DbQuery =
   newDbQuery("1 != 1")
 
-let TRUE = TrueExpr()
-let FALSE = FalseExpr()
+let TRUE* = TrueExpr()
+let FALSE* = FalseExpr()
 
 proc `===`*(name, val: string): EqualsExpr =
   result.new
