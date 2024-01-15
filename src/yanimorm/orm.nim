@@ -181,6 +181,11 @@ proc `and`*(a, b: WhereExpr): AndExpr =
   result.lhs = a
   result.rhs = b
 
+proc `or`*(a, b: WhereExpr): OrExpr =
+  result.new
+  result.lhs = a
+  result.rhs = b
+
 proc `between`*(name, a, b: string): BetweenExpr =
   result.new
   result.name = name
