@@ -1,6 +1,11 @@
 import std/[
   strutils,
+  options,
 ]
+
+export options
+
+
 
 type
   Po* = seq[string]
@@ -17,6 +22,7 @@ type
   ListOptions* = ref object of RootObj
     page*: int
     pageSize*: int = 10
+    ids*: Option[seq[string]]
 
 proc toBool*(v: string): bool {.inline.} =
   v.toLowerAscii != "0"
