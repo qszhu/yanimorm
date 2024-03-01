@@ -253,3 +253,26 @@ proc query*(self: SelectQuery): DbQuery =
 
   let args = whereArgs
   newDbQuery(sql, args)
+
+
+
+type
+  DeleteQuery* = ref object
+    table: DbTable
+    where: WhereExpr
+
+proc newDeleteQuery*(table: DbTable): DeleteQuery =
+  result.new
+  result.table = table
+  result.where = FALSE
+
+proc where*(self: DeleteQuery, where: WhereExpr): DeleteQuery =
+  self.where = where
+  self
+
+proc query*(self: DeleteQuery): DbQuery =
+  let (whereSql, whereArgs) = self.where.query
+
+  let sql = &"DELETE FROM {self.table.name} WHERE {whereSql}"
+  let args = whereArgs
+  newDbQuery(sql, args)
