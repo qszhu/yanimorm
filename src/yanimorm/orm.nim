@@ -131,7 +131,8 @@ method query*(self: InExpr): DbQuery =
   newDbQuery(&"{self.name} IN ({placeHolders})", self.vals)
 
 method query*(self: BetweenExpr): DbQuery =
-  newDbQuery(&"{self.name} BETWEEN ? AND ?", @[self.a, self.b])
+  # newDbQuery(&"{self.name} BETWEEN ? AND ?", @[self.a, self.b])
+  newDbQuery(&"{self.name} >= ? AND {self.name} <= ?", @[self.a, self.b])
 
 method query*(self: NotExpr): DbQuery =
   let (sql, args) = self.exp.query
