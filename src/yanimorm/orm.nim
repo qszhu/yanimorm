@@ -217,6 +217,7 @@ type
     where: WhereExpr
     orderBy: seq[tuple[name: string, order: Order]]
     offset, limit: int
+    indexedBy: string
 
 proc newSelectQuery*(table: DbTable): SelectQuery =
   result.new
@@ -240,11 +241,18 @@ proc limit*(self: SelectQuery, limit: int): SelectQuery =
   self.limit = limit
   self
 
+proc forceIndex*(self: SelectQuery, idx: string): SelectQuery =
+  self.indexedBy = &"idx_{self.table.name}_{idx}"
+  self
+
 proc query*(self: SelectQuery): DbQuery =
   let fields = self.table.fieldNames.join(", ")
   let (whereSql, whereArgs) = self.where.query
 
-  var sql = &"SELECT {fields} FROM {self.table.name} WHERE {whereSql}"
+  var sql = &"SELECT {fields} FROM {self.table.name}"
+  if self.indexedBy.len > 0:
+    sql = sql & &" INDEXED BY {self.indexedBy}"
+  sql = sql & &" WHERE {whereSql}"
 
   if self.orderBy.len > 0:
     let orders = self.orderBy.mapIt(&"{it[0]} {it[1]}").join(", ")
